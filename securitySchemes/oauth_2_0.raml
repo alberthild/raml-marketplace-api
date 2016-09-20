@@ -1,0 +1,15 @@
+type: OAuth 2.0
+describedBy:
+  headers:
+    Authorization:
+      description: Used to send a valid OAuth 2 access token
+      type: string
+  queryParameters:
+    access_token:
+      description: Used to send a valid OAuth 2 access token
+      type: string
+  responses:
+      401:
+        description: Bad or expired token
+      403:
+        description: Bad OAuth request

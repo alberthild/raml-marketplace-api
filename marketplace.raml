@@ -1,0 +1,143 @@
+#%RAML 1.0
+title: Marketplace API for Games
+version: 1
+baseUri: https://{your-server}/api/v1
+mediaType:  application/json
+description: |
+  This is a simple API specification which can be used to enable item trading
+  via online marketplace for any game which has items and inventories.
+
+  When you add all those functions according to this specification, a third party
+  store can easily pull users inventories and enable the the gamer audience to
+  trade their inventory online!
+securitySchemes:
+  oauth_2_0: !include securitySchemes/oauth_2_0.raml
+securedBy: [ oauth_2_0 ]
+types:
+  Item: !include types/item.raml
+  ItemProperty: !include types/item-property.raml
+  User: !include types/user.raml
+  Offer: !include types/offer.raml
+  Error: !include types/error.raml
+/user/inventory:
+  get:
+    description: Get items from user inventory
+    responses:
+      200:
+        body:
+          application/json:
+            type: Item[]
+            example: !include examples/user-inventory.json
+/items/{id}:
+  get:
+    description: Get item information
+    queryParameters:
+      id:
+        type: integer
+        description: Item id
+    responses:
+      200:
+        body:
+          application/json:
+            type: Item
+            example: !include examples/item.json
+/items/{id}/lock:
+  description: |
+    Lock item in inventory from manual actions.
+    Prevent off-market transfers etc.
+  post:
+    responses:
+      201:
+        body:
+          application/json:
+            type: Item
+      422:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/error.json
+/items/{id}/unlock:
+  description: |
+    Unlock item in inventory. Free the item from lock and allow manual
+    actions in game.
+  post:
+    responses:
+      201:
+        body:
+          application/json:
+            type: Item
+      422:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/error.json
+/offers:
+  post:
+    description: |
+      Creates new offer from sender to reciever, you can show in game offer
+      notification optionally.
+    body:
+      application/json:
+        type: Offer
+    responses:
+      201:
+        body:
+          application/json:
+            type: Offer
+            example: !include examples/offer.json
+      422:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/error.json
+/offers/{id}:
+  get:
+    description: Get offer information details
+    responses:
+      200:
+        body:
+          application/json:
+            type: Offer
+            example: !include examples/offer.json
+    queryParameters:
+      id:
+        type: integer
+        description: Offer id
+/offers/{id}/send:
+  post:
+    description: |
+      Perform offer sending, item should be transfered from one user to another
+      on this request.
+    queryParameters:
+      id:
+        type: integer
+        description: Offer id
+    responses:
+      200:
+        body:
+          application/json:
+            type: Offer
+            example: !include examples/offer.json
+      422:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/error.json
+/offers/{id}/cancel:
+  post:
+    description: Perform offer cancelation
+    queryParameters:
+      id:
+        type: integer
+        description: Offer id
+    responses:
+      200:
+        body:
+          application/json:
+            type: Offer
+            example: !include examples/offer.json
+      422:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/error.json

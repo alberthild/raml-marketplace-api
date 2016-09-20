@@ -1,0 +1,4 @@
+{
+  "message": "Failed to do some action",
+  "payload": { "reason": "some funky error happened" }
+}
