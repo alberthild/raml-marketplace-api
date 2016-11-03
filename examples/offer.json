@@ -2,5 +2,6 @@
   "id": 654321,
   "senderId": 12345,
   "recipientId": 12345,
+  "recipientCharaterId": 45646,
   "items": [{ "id": 31313, "id": 21212 }]
 }
