@@ -18,17 +18,37 @@ types:
   ItemProperty: !include types/item-property.raml
   RelatedItem: !include types/related-item.raml
   User: !include types/user.raml
+  Character: !include types/character.raml
   Offer: !include types/offer.raml
   Error: !include types/error.raml
-/user/inventory:
+/user:
   get:
-    description: Get items from user inventory
+    description: Get user details
+    responses:
+      200:
+        body:
+          application/json:
+            type: User
+            example: !include examples/user.json
+      422:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/error.json
+/characters/{id}/inventory:
+  get:
+    description: Get items from characters inventory
     responses:
       200:
         body:
           application/json:
             type: Item[]
-            example: !include examples/user-inventory.json
+            example: !include examples/character-inventory.json
+      422:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/error.json
 /items/{id}:
   get:
     description: Get item information

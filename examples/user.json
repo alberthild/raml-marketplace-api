@@ -1,0 +1,9 @@
+{
+  "id": 1234,
+  "username": "john.doe",
+  "picture": "s3.amazon.com/someurl.jpg",
+  "characters": [
+    { "id": 31313, "name": "Tony the Butcher", "picture": "s3.amazon.com/butcher.jpg" },
+    { "id": 34566, "name": "Mr. Robot", "picture": "s3.amazon.com/mr_robot.jpg" }
+  ]
+}
